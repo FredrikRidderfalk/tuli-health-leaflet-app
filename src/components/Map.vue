@@ -1,9 +1,9 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="container">
+    <h1 class="header">{{ msg }}</h1>
     <p class="subtitle">Locate your area</p>
     <label for="post-code">Enter your post code here: </label>
-    <input id="post-code" />
+    <input id="post-code" placeholder="E.g. SW7 3DX" />
   </div>
 </template>
 
@@ -18,18 +18,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .header {
+    margin-bottom: 2em;
+  }
+
+  .subtitle {
+    font-weight: 600;
+    margin-bottom: 1em;
+  }
+
+  .container {
+    margin-bottom: 2em;
+  }
 </style>
