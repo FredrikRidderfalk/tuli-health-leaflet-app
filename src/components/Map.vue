@@ -1,9 +1,7 @@
 <template>
   <div class="container">
-    <h1 class="header">{{ msg }}</h1>
+    <h1 class="title">{{ msg }}</h1>
     <p class="subtitle">Locate your area</p>
-    <label for="post-code">Enter your post code here: </label>
-    <input id="post-code" placeholder="E.g. SW7 3DX" />
   </div>
 </template>
 
@@ -18,7 +16,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .header {
+  .title {
     margin-bottom: 2em;
   }
 

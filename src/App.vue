@@ -1,6 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <Map msg="Welcome habibi, do you happen to see a map?"/>
+  <header class="header">
+    <img alt="Vue logo" src="./assets/logo.png" class="logo">
+  </header>
+
+  <Map msg="hiii habibi, do you happen to see a map?"/>
+  <label for="post-code">Enter your post code here: </label>
+  <input 
+    v-model="queryPostCode"
+    id="post-code" 
+    placeholder="E.g. SW7 3DX" 
+  />
 
   <!-- Map -->
   <div class="map" id="mapid">
@@ -24,9 +33,33 @@ import "leaflet/dist/leaflet.css"
 import leaflet from "leaflet"
 
 import Map from './components/Map.vue'
-import { onMounted } from '@vue/runtime-core'
+import { onMounted, ref } from '@vue/runtime-core'
+import axios from "axios"
 // Not sure which import, above or below, is correct
 // import { onMounted } from 'vue'
+
+// const existingPostCodes = [
+//   "EC2A 3AG",
+//   "N1 1RA",
+//   "W12 9BL",
+//   "W1U 6AA",
+//   "SW7 3HZ",
+//   "SW7 3DX",
+//   "W11 4UA",
+//   "SW13 9LB",
+//   "HP9 2JH",
+//   "HP9 1QD",
+//   "N1 2UQ",
+//   "W2 2HU",
+//   "W4 5DG",
+//   "NW5 2HR",
+//   "W11 2SE",
+//   "W8 6QD",
+//   "W11 3HL",
+//   "OL2 8NP",
+//   "W11 1LA",
+//   "NW3 2PT"
+// ]
 
 
 export default {
@@ -38,6 +71,8 @@ export default {
   },
   setup() {
     let mymap;
+    const queryPostCode = ref("");
+    const postCodeInfo = ref(null);
 
     onMounted(() => {
       mymap = leaflet.map('mapid').setView([51.505, -0.09], 13);
@@ -51,22 +86,52 @@ export default {
       accessToken: 'pk.eyJ1IjoiZGVlcGl0eSIsImEiOiJja3d0ZXF5OXMxZm5wMnBxbzdoNXJ6bHRqIn0.a2pkiB6fYydkqkzqFstnHA'
 }).addTo(mymap);
     })
+
+// not sure about the get endpoint...
+    const getPostCodeInfo = async () => {
+      try {
+        const data = await axios.get(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
+      const result = data.data;
+      console.log(result)
+      }
+      catch(err) {
+        alert(err.message)
+      }
+    }
+    return { queryPostCode, postCodeInfo, getPostCodeInfo };
   },
 };
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #5c3b8a;
   margin-top: 60px;
 }
+
 .map { 
-  height: 50vh;
-  width: 50vw;
+  min-height: 60vh;
+  width: 100vw;
   margin: 0 auto;
   }
+
+.logo {
+  max-width: 162px;
+  margin-left: 15px;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
 </style>
