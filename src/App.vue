@@ -76,7 +76,8 @@ export default {
     const postCodeInfo = ref(null);
 
     onMounted(() => {
-      mymap = leaflet.map('mapid').setView([51.505, -0.09], 13);
+      // 51.522250, -0.081100 - lat and long for Tuli Health headquarters
+      mymap = leaflet.map('mapid').setView([39.606560, -75.833092], 9);
 
       leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGVlcGl0eSIsImEiOiJja3d0ZXF5OXMxZm5wMnBxbzdoNXJ6bHRqIn0.a2pkiB6fYydkqkzqFstnHA', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -94,11 +95,19 @@ export default {
         const data = await axios.get(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
       const result = data.data;
       // console log result so that we can see that our post codes fetches the API data
-      // console.log(result)
-      postCodeInfo.value={
-        latitude: result.latitude,
-        longitude: result.longitude,
+      console.log(result.result)
+      postCodeInfo.value = {
+        latitude: result.result.latitude,
+        longitude: result.result.longitude,
       }
+      leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude]).addTo(mymap);
+// leaflet.circle([51.508, -0.11], {
+//     color: 'red',
+//     fillColor: '#f03',
+//     fillOpacity: 0.5,
+//     radius: 500
+// }).addTo(mymap);
+      mymap.setView([postCodeInfo.value.latitude, postCodeInfo.value.longitude], 13);
       // now we can use postCodeInfo when we need the latitude and longitude to show a pin on the map. Display the info on the page with the prop v-bind: postCodeInfo="postCodeInfo"
       }
       catch(err) {
