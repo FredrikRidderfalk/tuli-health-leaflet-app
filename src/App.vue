@@ -95,6 +95,11 @@ export default {
       const result = data.data;
       // console log result so that we can see that our post codes fetches the API data
       // console.log(result)
+      postCodeInfo.value={
+        latitude: result.latitude,
+        longitude: result.longitude,
+      }
+      // now we can use postCodeInfo when we need the latitude and longitude to show a pin on the map. Display the info on the page with the prop v-bind: postCodeInfo="postCodeInfo"
       }
       catch(err) {
         alert(err.message)
