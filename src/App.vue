@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <Map msg="Welcome habibi, do you happen see a map?"/>
+  <Map msg="Welcome Habibi, do you happen see a map?"/>
 </template>
 
 <script>
