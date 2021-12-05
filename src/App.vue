@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <Map msg="Welcome Habibi, do you happen see a map?"/>
+  <Map msg="Welcome habibi, do you happen to see a map?"/>
 
   <!-- Map -->
   <div class="map" id="mapid">
@@ -65,8 +65,8 @@ export default {
   margin-top: 60px;
 }
 .map { 
-  height: 75vh;
-  width: 75vw;
+  height: 50vh;
+  width: 50vw;
   margin: 0 auto;
   }
 </style>
