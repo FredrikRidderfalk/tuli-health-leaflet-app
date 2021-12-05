@@ -93,7 +93,8 @@ export default {
       try {
         const data = await axios.get(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
       const result = data.data;
-      console.log(result)
+      // console log result so that we can see that our post codes fetches the API data
+      // console.log(result)
       }
       catch(err) {
         alert(err.message)
