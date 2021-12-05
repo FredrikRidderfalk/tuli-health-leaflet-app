@@ -3,13 +3,14 @@
     <img alt="Vue logo" src="./assets/logo.png" class="logo">
   </header>
 
-  <Map msg="hiii habibi, do you happen to see a map?"/>
+  <Map msg="Locate Nearby Pharmacies For Medical Appointments And Testing"/>
   <label for="post-code">Enter your post code here: </label>
   <input 
     v-model="queryPostCode"
     id="post-code" 
     placeholder="E.g. SW7 3DX" 
   />
+  <button @Click="getPostCodeInfo" class="locate-btn">Locate</button>
 
   <!-- Map -->
   <div class="map" id="mapid">
@@ -107,6 +108,8 @@ export default {
 body {
   margin: 0;
   padding: 0;
+  letter-spacing: 1.1px;
+  background: linear-gradient(160deg, rgba(243,251,255,1) 50%, rgba(248,246,255,1) 100%);
 }
 
 #app {
@@ -133,5 +136,17 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
+}
+
+.locate-btn {
+  border: none;
+  background-color: #5c3b8a;
+  padding: 5px 15px;
+  color: white;
+  font-weight: 600;
+}
+
+input {
+  padding: 3px;
 }
 </style>
