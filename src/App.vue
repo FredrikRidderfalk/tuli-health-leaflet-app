@@ -3,7 +3,6 @@
     <img alt="Tuli logo" src="./assets/logo.png" class="logo">
   </header>
 
-  <!-- <Map msg="Locate Nearby Pharmacies For Medical Appointments And Testing"/> -->
   <label for="post-code">Enter your post code here: </label>
   <input 
     v-model="queryPostCode"
@@ -12,7 +11,6 @@
   />
   <button @Click="getPostCodeInfo" class="locate-btn">Locate</button>
 
-  <!-- Map -->
   <div class="map" id="mapid">
     <l-map 
       v-model="zoom"
@@ -25,23 +23,17 @@
 </template>
 
 <script>
-// DON'T load Leaflet components here!
-// Its CSS is needed though, if not imported elsewhere in your application.
 import { LMap, LGeoJson } from "@vue-leaflet/vue-leaflet"
 import "leaflet/dist/leaflet.css"
 
 import leaflet from "leaflet"
 
-// import Map from './components/Map.vue'
 import { onMounted, ref } from '@vue/runtime-core'
 import axios from "axios"
-// Not sure which import, above or below, is correct
-// import { onMounted } from 'vue'
 
 export default {
   name: 'App',
   components: {
-    // Map,
     LMap,
     LGeoJson,
   },
@@ -156,7 +148,7 @@ export default {
 
     onMounted(() => {
       // 51.522250, -0.081100 - lat and long for Tuli Health headquarters
-      mymap = leaflet.map('mapid').setView([39.606560, -75.833092], 9);
+      mymap = leaflet.map('mapid').setView([51.522250, -0.081100], 9);
 
       leaflet.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGVlcGl0eSIsImEiOiJja3d0ZXF5OXMxZm5wMnBxbzdoNXJ6bHRqIn0.a2pkiB6fYydkqkzqFstnHA', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -167,14 +159,6 @@ export default {
       accessToken: 'pk.eyJ1IjoiZGVlcGl0eSIsImEiOiJja3d0ZXF5OXMxZm5wMnBxbzdoNXJ6bHRqIn0.a2pkiB6fYydkqkzqFstnHA'
 }).addTo(mymap);
     })
-
-//     async function getExistingPostCodeInfo() {
-//     let response = await fetch(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
-//     let data = await response.json()
-    
-//     console.log(data)
-// }
-//     getExistingPostCodeInfo()
 
     const getPostCodeInfo = async () => {
       try {
@@ -199,21 +183,16 @@ export default {
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       })
       
-      // existingPostCodes will be an object, and this forEach loop loops through it
+      // existingPostCodes will be an object, and this forEach loops through it
       existingPostCodes.forEach(code => {
         leaflet.marker([code.latitude, code.longitude], {icon: leafletIcon}).addTo(mymap);
       })
+
       leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude], {icon: leafletIcon}).addTo(mymap)
       .bindPopup(`<strong class="strong">${queryPostCode.value}</strong>`)
       .openPopup();
-      // leaflet.circle([51.508, -0.11], {
-      //     color: 'red',
-      //     fillColor: '#f03',
-      //     fillOpacity: 0.5,
-      //     radius: 500
-      // }).addTo(mymap);
+
       mymap.setView([postCodeInfo.value.latitude, postCodeInfo.value.longitude], 13);
-      // now we can use postCodeInfo when we need the latitude and longitude to show a pin on the map. Display the info on the page with the prop v-bind: postCodeInfo="postCodeInfo"
       }
       catch(err) {
         alert(err.message)
