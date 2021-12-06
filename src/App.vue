@@ -1,9 +1,9 @@
 <template>
   <header class="header">
-    <img alt="Vue logo" src="./assets/logo.png" class="logo">
+    <img alt="Tuli logo" src="./assets/logo.png" class="logo">
   </header>
 
-  <Map msg="Locate Nearby Pharmacies For Medical Appointments And Testing"/>
+  <!-- <Map msg="Locate Nearby Pharmacies For Medical Appointments And Testing"/> -->
   <label for="post-code">Enter your post code here: </label>
   <input 
     v-model="queryPostCode"
@@ -33,7 +33,7 @@ import "leaflet/dist/leaflet.css"
 // John tutorial
 import leaflet from "leaflet"
 
-import Map from './components/Map.vue'
+// import Map from './components/Map.vue'
 import { onMounted, ref } from '@vue/runtime-core'
 import axios from "axios"
 // Not sure which import, above or below, is correct
@@ -66,7 +66,7 @@ import axios from "axios"
 export default {
   name: 'App',
   components: {
-    Map,
+    // Map,
     LMap,
     LGeoJson,
   },
@@ -133,13 +133,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #5c3b8a;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .map { 
-  min-height: 60vh;
+  min-height: 85vh;
   width: 100vw;
   margin: 0 auto;
+  margin-top: 10px;
   }
 
 .logo {
@@ -159,6 +160,13 @@ body {
   padding: 5px 15px;
   color: white;
   font-weight: 600;
+  cursor: pointer;
+  margin-left: 5px;
+  border-radius: 2px;
+}
+
+.locate-btn:hover {
+  background-color: #6f49a5;
 }
 
 input {
