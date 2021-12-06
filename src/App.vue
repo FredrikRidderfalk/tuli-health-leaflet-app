@@ -30,7 +30,6 @@
 import { LMap, LGeoJson } from "@vue-leaflet/vue-leaflet"
 import "leaflet/dist/leaflet.css"
 
-// John tutorial
 import leaflet from "leaflet"
 
 // import Map from './components/Map.vue'
@@ -50,38 +49,109 @@ export default {
     let mymap;
     const queryPostCode = ref("");
     const postCodeInfo = ref(null);
-    const existingPostCodes = [
-        "EC2A 3AG",
-        "N1 1RA",
-        "W12 9BL",
-        "W1U 6AA",
-        "SW7 3HZ",
-        "SW7 3DX",
-        "W11 4UA",
-        "SW13 9LB",
-        "HP9 2JH",
-        "HP9 1QD",
-        "N1 2UQ",
-        "W2 2HU",
-        "W4 5DG",
-        "NW5 2HR",
-        "W11 2SE",
-        "W8 6QD",
-        "W11 3HL",
-        "OL2 8NP",
-        "W11 1LA",
-        "NW3 2PT"
-      ]
+    // const existingPostCodeInfo = ref(null);
+    // const existingPostCodes = {
+    //   "postcodes": [
+    //     "EC2A 3AG",
+    //     "N1 1RA",
+    //     "W12 9BL",
+    //     "W1U 6AA",
+    //     "SW7 3HZ",
+    //     "SW7 3DX",
+    //     "W11 4UA",
+    //     "SW13 9LB",
+    //     "HP9 2JH",
+    //     "HP9 1QD",
+    //     "N1 2UQ",
+    //     "W2 2HU",
+    //     "W4 5DG",
+    //     "NW5 2HR",
+    //     "W11 2SE",
+    //     "W8 6QD",
+    //     "W11 3HL",
+    //     "OL2 8NP",
+    //     "W11 1LA",
+    //     "NW3 2PT"
+    //   ]
+    //   };
 
-    const existingPostCodes2 = [
+    const existingPostCodes = [
       {
-        "latitude": 51.525,
-        "longitude": -0.0825,
+        "latitude": 51.5249,
+        "longitude": -0.0805,
       },
       {
-        "latitude": 51.325,
-        "longitude": -0.0875,
-      }
+        "latitude": 51.5402,
+        "longitude": -0.1028,
+      },
+      {
+        "latitude": 51.5028,
+        "longitude": -0.2433,
+      },
+      {
+        "latitude": 51.5199,
+        "longitude": -0.1561,
+      },
+      {
+        "latitude": 51.4936,
+        "longitude": -0.1745,
+      },
+      {
+        "latitude": 51.4935,
+        "longitude": -0.1757,
+      },
+      {
+        "latitude": 51.5068,
+        "longitude": -0.2076,
+      },
+      {
+        "latitude": 51.4733,
+        "longitude": -0.2482,
+      },
+      {
+        "latitude": 51.6019,
+        "longitude": -0.6347,
+      },
+      {
+        "latitude": 51.6104,
+        "longitude": -0.6454,
+      },
+      {
+        "latitude": 51.5428,
+        "longitude": -0.1029,
+      },
+      {
+        "latitude": 51.5173,
+        "longitude": -0.1666,
+      },
+      {
+        "latitude": 51.5018,
+        "longitude": -0.2655,
+      },
+      {
+        "latitude": 51.5561,
+        "longitude": -0.1392,
+      },
+      {
+        "latitude": 51.5142,
+        "longitude": -0.2004,
+      },
+      {
+        "latitude": 51.4966,
+        "longitude": -0.1930,
+      },
+      {
+        "latitude": 51.5097,
+        "longitude": -0.1970,
+      },
+      {
+        "latitude": 51.5165,
+        "longitude": -0.2052,
+      },
+      {
+        "latitude": 51.5545,
+        "longitude": -0.1659,
+      },
     ]
 
     onMounted(() => {
@@ -98,15 +168,24 @@ export default {
 }).addTo(mymap);
     })
 
+//     async function getExistingPostCodeInfo() {
+//     let response = await fetch(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
+//     let data = await response.json()
+    
+//     console.log(data)
+// }
+//     getExistingPostCodeInfo()
+
     const getPostCodeInfo = async () => {
       try {
         const data = await axios.get(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
-      const result = data.data;
-      console.log(result.result)
-      postCodeInfo.value = {
-        latitude: result.result.latitude,
-        longitude: result.result.longitude,
-      }
+        const result = data.data;
+        console.log(result.result)
+        postCodeInfo.value = {
+          latitude: result.result.latitude,
+          longitude: result.result.longitude,
+        }
+
 
 // the marker icon from the Leaflet library is currently broken, so we manually set it below
       let leafletIcon = leaflet.icon ({
@@ -121,7 +200,7 @@ export default {
       })
       
       // existingPostCodes will be an object, and this forEach loop loops through it
-      existingPostCodes2.forEach(code => {
+      existingPostCodes.forEach(code => {
         leaflet.marker([code.latitude, code.longitude], {icon: leafletIcon}).addTo(mymap);
       })
       leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude], {icon: leafletIcon}).addTo(mymap)
@@ -140,7 +219,7 @@ export default {
         alert(err.message)
       }
     }
-    return { queryPostCode, postCodeInfo, getPostCodeInfo, existingPostCodes, existingPostCodes2 };
+    return { queryPostCode, postCodeInfo, getPostCodeInfo, existingPostCodes };
   },
 };
 </script>
