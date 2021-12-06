@@ -50,6 +50,39 @@ export default {
     let mymap;
     const queryPostCode = ref("");
     const postCodeInfo = ref(null);
+    const existingPostCodes = [
+        "EC2A 3AG",
+        "N1 1RA",
+        "W12 9BL",
+        "W1U 6AA",
+        "SW7 3HZ",
+        "SW7 3DX",
+        "W11 4UA",
+        "SW13 9LB",
+        "HP9 2JH",
+        "HP9 1QD",
+        "N1 2UQ",
+        "W2 2HU",
+        "W4 5DG",
+        "NW5 2HR",
+        "W11 2SE",
+        "W8 6QD",
+        "W11 3HL",
+        "OL2 8NP",
+        "W11 1LA",
+        "NW3 2PT"
+      ]
+
+    const existingPostCodes2 = [
+      {
+        "latitude": 51.525,
+        "longitude": -0.0825,
+      },
+      {
+        "latitude": 51.325,
+        "longitude": -0.0875,
+      }
+    ]
 
     onMounted(() => {
       // 51.522250, -0.081100 - lat and long for Tuli Health headquarters
@@ -65,40 +98,15 @@ export default {
 }).addTo(mymap);
     })
 
-// not sure about the get endpoint...
     const getPostCodeInfo = async () => {
       try {
         const data = await axios.get(`https://api.postcodes.io/postcodes/${queryPostCode.value}`)
       const result = data.data;
-      // console log result so that we can see that our post codes fetches the API data
       console.log(result.result)
       postCodeInfo.value = {
         latitude: result.result.latitude,
         longitude: result.result.longitude,
       }
-
-      // const existingPostCodes = [
-      //   "EC2A 3AG",
-      //   "N1 1RA",
-      //   "W12 9BL",
-      //   "W1U 6AA",
-      //   "SW7 3HZ",
-      //   "SW7 3DX",
-      //   "W11 4UA",
-      //   "SW13 9LB",
-      //   "HP9 2JH",
-      //   "HP9 1QD",
-      //   "N1 2UQ",
-      //   "W2 2HU",
-      //   "W4 5DG",
-      //   "NW5 2HR",
-      //   "W11 2SE",
-      //   "W8 6QD",
-      //   "W11 3HL",
-      //   "OL2 8NP",
-      //   "W11 1LA",
-      //   "NW3 2PT"
-      // ]
 
 // the marker icon from the Leaflet library is currently broken, so we manually set it below
       let leafletIcon = leaflet.icon ({
@@ -112,6 +120,10 @@ export default {
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       })
       
+      // existingPostCodes will be an object, and this forEach loop loops through it
+      existingPostCodes2.forEach(code => {
+        leaflet.marker([code.latitude, code.longitude], {icon: leafletIcon}).addTo(mymap);
+      })
       leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude], {icon: leafletIcon}).addTo(mymap);
       // leaflet.circle([51.508, -0.11], {
       //     color: 'red',
@@ -126,7 +138,7 @@ export default {
         alert(err.message)
       }
     }
-    return { queryPostCode, postCodeInfo, getPostCodeInfo };
+    return { queryPostCode, postCodeInfo, getPostCodeInfo, existingPostCodes, existingPostCodes2 };
   },
 };
 </script>
