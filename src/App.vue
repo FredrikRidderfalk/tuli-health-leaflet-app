@@ -115,8 +115,8 @@ export default {
 
         iconSize:     [28, 46], // size of the icon
         shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [4, 62], // point of the icon which will correspond to marker's location
-        shadowAnchor: [6, 80],  // the same for the shadow
+        iconAnchor:   [18, 75], // point of the icon which will correspond to marker's location
+        shadowAnchor: [20, 93],  // the same for the shadow
         popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
       })
       
@@ -124,7 +124,9 @@ export default {
       existingPostCodes2.forEach(code => {
         leaflet.marker([code.latitude, code.longitude], {icon: leafletIcon}).addTo(mymap);
       })
-      leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude], {icon: leafletIcon}).addTo(mymap);
+      leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude], {icon: leafletIcon}).addTo(mymap)
+      .bindPopup(`<strong class="strong">${queryPostCode.value}</strong>`)
+      .openPopup();
       // leaflet.circle([51.508, -0.11], {
       //     color: 'red',
       //     fillColor: '#f03',
@@ -191,6 +193,10 @@ body {
 
 .locate-btn:hover {
   background-color: #6f49a5;
+}
+
+.strong {
+  text-transform: uppercase;
 }
 
 input {
