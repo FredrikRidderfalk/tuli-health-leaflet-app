@@ -39,30 +39,6 @@ import axios from "axios"
 // Not sure which import, above or below, is correct
 // import { onMounted } from 'vue'
 
-// const existingPostCodes = [
-//   "EC2A 3AG",
-//   "N1 1RA",
-//   "W12 9BL",
-//   "W1U 6AA",
-//   "SW7 3HZ",
-//   "SW7 3DX",
-//   "W11 4UA",
-//   "SW13 9LB",
-//   "HP9 2JH",
-//   "HP9 1QD",
-//   "N1 2UQ",
-//   "W2 2HU",
-//   "W4 5DG",
-//   "NW5 2HR",
-//   "W11 2SE",
-//   "W8 6QD",
-//   "W11 3HL",
-//   "OL2 8NP",
-//   "W11 1LA",
-//   "NW3 2PT"
-// ]
-
-
 export default {
   name: 'App',
   components: {
@@ -100,13 +76,49 @@ export default {
         latitude: result.result.latitude,
         longitude: result.result.longitude,
       }
-      leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude]).addTo(mymap);
-// leaflet.circle([51.508, -0.11], {
-//     color: 'red',
-//     fillColor: '#f03',
-//     fillOpacity: 0.5,
-//     radius: 500
-// }).addTo(mymap);
+
+      // const existingPostCodes = [
+      //   "EC2A 3AG",
+      //   "N1 1RA",
+      //   "W12 9BL",
+      //   "W1U 6AA",
+      //   "SW7 3HZ",
+      //   "SW7 3DX",
+      //   "W11 4UA",
+      //   "SW13 9LB",
+      //   "HP9 2JH",
+      //   "HP9 1QD",
+      //   "N1 2UQ",
+      //   "W2 2HU",
+      //   "W4 5DG",
+      //   "NW5 2HR",
+      //   "W11 2SE",
+      //   "W8 6QD",
+      //   "W11 3HL",
+      //   "OL2 8NP",
+      //   "W11 1LA",
+      //   "NW3 2PT"
+      // ]
+
+// the marker icon from the Leaflet library is currently broken, so we manually set it below
+      let leafletIcon = leaflet.icon ({
+        iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
+        shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+
+        iconSize:     [28, 46], // size of the icon
+        shadowSize:   [50, 64], // size of the shadow
+        iconAnchor:   [4, 62], // point of the icon which will correspond to marker's location
+        shadowAnchor: [6, 80],  // the same for the shadow
+        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+      })
+      
+      leaflet.marker([postCodeInfo.value.latitude, postCodeInfo.value.longitude], {icon: leafletIcon}).addTo(mymap);
+      // leaflet.circle([51.508, -0.11], {
+      //     color: 'red',
+      //     fillColor: '#f03',
+      //     fillOpacity: 0.5,
+      //     radius: 500
+      // }).addTo(mymap);
       mymap.setView([postCodeInfo.value.latitude, postCodeInfo.value.longitude], 13);
       // now we can use postCodeInfo when we need the latitude and longitude to show a pin on the map. Display the info on the page with the prop v-bind: postCodeInfo="postCodeInfo"
       }
